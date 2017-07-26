@@ -5,22 +5,11 @@
     <body>
         <h2>Gmail login</h2>
         <p>Given a valid username and password I should see my inbox</p>
-         <span concordion:set="#username">cpstarling@gmail.com</span>
-         <p concordion:execute="gmailLogin(#username)">Username</p>       
-         <span concordion:set="#password">GMAdooms11</span>       
-         <p concordion:execute="gmailPassword(#password)">Password</p>       
+         <span concordion:set="#username">xxxxxx@gmail.com</span>
+         <p concordion:assertTrue="gmailLogin(#username)">Username</p>       
+         <span concordion:set="#password">xxxxxxx</span>       
+         <p concordion:assertTrue="gmailPassword(#password)">Password</p>       
+         <p concordion:execute="cleanup()"> </p>       
 
-        <p>Given an invalid username should I should see my inbox</p>
-
-        <p>Summary: </p>
-         <span concordion:set="#summary">New issue created by automated test</span>        
-        <p>Description: </p>
-         <span concordion:set="#description">Issue description</span>       
-        <p>Priority: </p>
-         <span concordion:set="#priority">Major</span>
-         <p concordion:execute="createNewIssue(#summary, #description, #priority)">
-            Step 2. Create new issue
-         </p>     
-         <p concordion:assertTrue="isIssueCreated()">Step 3. Assert - new issue is created</p>
     </body>
 </html>

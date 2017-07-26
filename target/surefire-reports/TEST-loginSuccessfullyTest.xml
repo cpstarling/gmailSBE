@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="loginSuccessfullyTest" time="31.946" tests="1" errors="0" skipped="0" failures="0">
+<testsuite name="loginSuccessfullyTest" time="28.357" tests="1" errors="0" skipped="0" failures="1">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64"/>
@@ -59,5 +59,40 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="[Concordion Specification for &apos;loginSuccessfully&apos;]" classname="loginSuccessfullyTest" time="31.946"/>
+  <testcase name="[Concordion Specification for &apos;loginSuccessfully&apos;]" classname="loginSuccessfullyTest" time="28.357">
+    <failure message="Specification has failure(s). See output HTML for details." type="org.concordion.internal.ConcordionAssertionError">org.concordion.internal.ConcordionAssertionError: Specification has failure(s). See output HTML for details.
+	at org.concordion.internal.ImplementationStatusChecker$3.assertIsSatisfied(ImplementationStatusChecker.java:101)
+	at org.concordion.internal.SummarizingResultRecorder.assertIsSatisfied(SummarizingResultRecorder.java:45)
+	at org.concordion.integration.junit4.ConcordionRunner.invoke(ConcordionRunner.java:204)
+	at org.concordion.integration.junit4.ConcordionRunner$1.invoke(ConcordionRunner.java:31)
+	at org.concordion.integration.junit4.ConcordionFrameworkMethod.invokeExplosively(ConcordionFrameworkMethod.java:58)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.concordion.integration.junit4.ConcordionRunner.runChild(ConcordionRunner.java:187)
+	at org.concordion.integration.junit4.ConcordionRunner.runChild(ConcordionRunner.java:23)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.concordion.integration.junit4.ConcordionRunner.run(ConcordionRunner.java:146)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:264)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:153)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:124)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+</failure>
+    <system-err><![CDATA[Starting ChromeDriver 2.30.477691 (6ee44a7247c639c0703f291d320bdf05c1531b57) on port 10152
+Only local connections are allowed.
+Jul 26, 2017 8:04:36 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Attempting bi-dialect session, assuming Postel's Law holds true on the remote end
+Using PPAPI flash.
+ --ppapi-flash-path=/usr/lib/adobe-flashplugin/libpepflashplayer.so --ppapi-flash-version=
+Jul 26, 2017 8:04:42 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: OSS
+]]></system-err>
+  </testcase>
 </testsuite>

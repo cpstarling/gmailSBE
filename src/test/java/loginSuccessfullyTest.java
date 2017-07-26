@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.TimeoutException;
+
 @RunWith(ConcordionRunner.class)
 public class loginSuccessfullyTest {
     public WebDriver driver;
@@ -51,7 +53,14 @@ public class loginSuccessfullyTest {
 
         //wait for inbox 
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.titleContains("Inbox")); 
+
+        try {
+            wait.until(ExpectedConditions.titleContains("Inbox")); 
+        } 
+        catch (TimeoutException e) { 
+            cleanUp();
+            return false;
+        }
 
         //if get here then we loaded inbox, otherwise wait condition fails
         return true;
