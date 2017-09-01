@@ -3,13 +3,54 @@
         <meta charset="UTF-8"/>
 </head>
     <body>
-        <h2>Gmail login</h2>
-        <p>Given a valid username and password I should see my inbox</p>
-         <span concordion:set="#username">xxxxxx@gmail.com</span>
-         <p concordion:assertTrue="gmailLogin(#username)">Username</p>       
-         <span concordion:set="#password">xxxxxxx</span>       
-         <p concordion:assertTrue="gmailPassword(#password)">Password</p>       
-         <p concordion:execute="cleanup()"> </p>       
 
-    </body>
+     <div concordion:example="send email">
+     <h2>Validation of basic email elements when composing an email</h2>
+     <p> When composing an email message some basic validation should occur. This warns the user if they are about to send an email with no subject, no email body, or email a badly formed recepient address</p>
+
+     <h3>Address, Subject, Email body valdation</h3>
+
+       <table concordion:execute="#message = sendEmail(#to, #subject, #body)">
+         <tr>
+           <th concordion:set="#to">Recipient</th>
+           <th concordion:set="#subject">Subject</th>
+           <th concordion:set="#body">Email body</th>
+           <th concordion:assertEquals="#message">Outcome message</th>
+         </tr>
+         <tr>
+           <td>validAddress@mailinator.com</td>
+           <td>Test subject</td>
+           <td>Test email body</td>
+           <td>Sent</td>
+         </tr>
+         <tr>
+           <td>invalidAddress</td>
+           <td>Test subject</td>
+           <td>Test email body</td>
+           <td>Not Sendable</td>
+         </tr>
+         <tr>
+           <td></td>
+           <td>Test subject</td>
+           <td>Test email body</td>
+           <td>Not Sendable</td>
+         </tr>
+         <tr>
+           <td>validAddress@mailinator.com</td>
+           <td></td>
+           <td>Test email body</td>
+           <td>Send</td>
+         </tr>
+         <tr>
+           <td>validAddress@mailinator.com</td>
+           <td>Test subject</td>
+           <td></td>
+           <td>Sent</td>
+         </tr>
+       </table>
+   </div>
+
+   <p concordion:execute="cleanUp()">x </p>       
+
+   </body>
 </html>

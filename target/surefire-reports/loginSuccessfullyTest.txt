@@ -1,12 +1,14 @@
 -------------------------------------------------------------------------------
 Test set: loginSuccessfullyTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 29.111 sec <<< FAILURE! - in loginSuccessfullyTest
-[Concordion Specification for 'loginSuccessfully'](loginSuccessfullyTest)  Time elapsed: 28.357 sec  <<< FAILURE!
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 114.352 sec <<< FAILURE! - in loginSuccessfullyTest
+send email(loginSuccessfullyTest)  Time elapsed: 99.972 sec  <<< FAILURE!
 org.concordion.internal.ConcordionAssertionError: Specification has failure(s). See output HTML for details.
 	at org.concordion.internal.ImplementationStatusChecker$3.assertIsSatisfied(ImplementationStatusChecker.java:101)
 	at org.concordion.internal.SummarizingResultRecorder.assertIsSatisfied(SummarizingResultRecorder.java:45)
-	at org.concordion.integration.junit4.ConcordionRunner.invoke(ConcordionRunner.java:204)
+	at org.concordion.internal.FixtureRunner.printResultSummary(FixtureRunner.java:79)
+	at org.concordion.internal.FixtureRunner.run(FixtureRunner.java:67)
+	at org.concordion.integration.junit4.ConcordionRunner.invoke(ConcordionRunner.java:203)
 	at org.concordion.integration.junit4.ConcordionRunner$1.invoke(ConcordionRunner.java:31)
 	at org.concordion.integration.junit4.ConcordionFrameworkMethod.invokeExplosively(ConcordionFrameworkMethod.java:58)
 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)

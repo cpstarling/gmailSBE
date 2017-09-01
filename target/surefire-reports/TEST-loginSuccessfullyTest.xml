@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="loginSuccessfullyTest" time="28.357" tests="1" errors="0" skipped="0" failures="1">
+<testsuite name="loginSuccessfullyTest" time="113.209" tests="2" errors="0" skipped="0" failures="1">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64"/>
@@ -59,11 +59,14 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="[Concordion Specification for &apos;loginSuccessfully&apos;]" classname="loginSuccessfullyTest" time="28.357">
+  <testcase name="[Outer]" classname="loginSuccessfullyTest" time="13.237"/>
+  <testcase name="send email" classname="loginSuccessfullyTest" time="99.972">
     <failure message="Specification has failure(s). See output HTML for details." type="org.concordion.internal.ConcordionAssertionError">org.concordion.internal.ConcordionAssertionError: Specification has failure(s). See output HTML for details.
 	at org.concordion.internal.ImplementationStatusChecker$3.assertIsSatisfied(ImplementationStatusChecker.java:101)
 	at org.concordion.internal.SummarizingResultRecorder.assertIsSatisfied(SummarizingResultRecorder.java:45)
-	at org.concordion.integration.junit4.ConcordionRunner.invoke(ConcordionRunner.java:204)
+	at org.concordion.internal.FixtureRunner.printResultSummary(FixtureRunner.java:79)
+	at org.concordion.internal.FixtureRunner.run(FixtureRunner.java:67)
+	at org.concordion.integration.junit4.ConcordionRunner.invoke(ConcordionRunner.java:203)
 	at org.concordion.integration.junit4.ConcordionRunner$1.invoke(ConcordionRunner.java:31)
 	at org.concordion.integration.junit4.ConcordionFrameworkMethod.invokeExplosively(ConcordionFrameworkMethod.java:58)
 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
@@ -85,13 +88,17 @@
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
 </failure>
-    <system-err><![CDATA[Starting ChromeDriver 2.30.477691 (6ee44a7247c639c0703f291d320bdf05c1531b57) on port 10152
+    <system-out><![CDATA[
+file:///home/chris/workspace/sbe/target/specs/loginSuccessfully.html#send email
+Successes: 2, Failures: 2, Exceptions: 1
+]]></system-out>
+    <system-err><![CDATA[Starting ChromeDriver 2.30.477691 (6ee44a7247c639c0703f291d320bdf05c1531b57) on port 21460
 Only local connections are allowed.
-Jul 26, 2017 8:04:36 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+Sep 02, 2017 1:45:31 AM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Attempting bi-dialect session, assuming Postel's Law holds true on the remote end
 Using PPAPI flash.
- --ppapi-flash-path=/usr/lib/adobe-flashplugin/libpepflashplayer.so --ppapi-flash-version=
-Jul 26, 2017 8:04:42 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+--disable-new-tab-first-run --enable-user-scripts --ppapi-flash-path=/usr/lib/adobe-flashplugin/libpepflashplayer.so --ppapi-flash-version=
+Sep 02, 2017 1:45:36 AM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected dialect: OSS
 ]]></system-err>
   </testcase>
