@@ -1,10 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: loginSuccessfullyTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 114.352 sec <<< FAILURE! - in loginSuccessfullyTest
-send email(loginSuccessfullyTest)  Time elapsed: 99.972 sec  <<< FAILURE!
-org.concordion.internal.ConcordionAssertionError: Specification has failure(s). See output HTML for details.
-	at org.concordion.internal.ImplementationStatusChecker$3.assertIsSatisfied(ImplementationStatusChecker.java:101)
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 84.11 sec <<< FAILURE! - in loginSuccessfullyTest
+send email(loginSuccessfullyTest)  Time elapsed: 73.011 sec  <<< FAILURE!
+org.concordion.internal.ConcordionAssertionError: Specification has exception(s). See output HTML for details.
+	at org.concordion.internal.ImplementationStatusChecker$3.assertIsSatisfied(ImplementationStatusChecker.java:104)
 	at org.concordion.internal.SummarizingResultRecorder.assertIsSatisfied(SummarizingResultRecorder.java:45)
 	at org.concordion.internal.FixtureRunner.printResultSummary(FixtureRunner.java:79)
 	at org.concordion.internal.FixtureRunner.run(FixtureRunner.java:67)

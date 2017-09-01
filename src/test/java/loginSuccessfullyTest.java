@@ -132,6 +132,22 @@ public class loginSuccessfullyTest {
                 if (waitForElementByXpath("//div[contains(text(), 'message has been sent')]", 1)) {
                     returnValue = "Sent";
                 }
+                else {
+                    try {
+                        returnValue = driver.findElement(By.xpath("//div[@role='alertdialog']/div[2]")).getText();
+
+                    }
+                    catch (Exception e) {
+                        try { 
+                            returnValue = driver.switchTo().alert().getText();
+                        }
+                        catch (Exception unknown) {
+                            returnValue = "Unknown State";
+                        }
+                    }
+
+                }
+
 
                 //check for warningn and return message
                 //else sent
