@@ -19,7 +19,7 @@ import java.util.Iterator;
 
 
 @RunWith(ConcordionRunner.class)
-public class loginSuccessfullyTest {
+public class sendEmailValidationTest {
     public WebDriver driver;
     public boolean authenticated;
 
