@@ -25,8 +25,8 @@ public class loginSuccessfullyTest {
 
     public WebDriver getDriver(){
         if (driver == null){
-            System.setProperty("webdriver.chrome.driver", "/home/chris/workspace/webdriver/chromedriver");
-		    this.driver = new ChromeDriver();
+            //System.setProperty("webdriver.chrome.driver", "/home/chris/workspace/webdriver/chromedriver");
+		        this.driver = new ChromeDriver();
             return driver;
         }
         else {
@@ -43,10 +43,10 @@ public class loginSuccessfullyTest {
         }
         else {
             driver = this.getDriver();
-            driver.get("http://www.gmail.com");
+            //driver.get("http://www.gmail.com");
             //check for alert (navigate way) and accept
             try {
-                driver.switchTo().alert().accept();} 
+                driver.switchTo().alert().accept();}
             catch (NoAlertPresentException e) {
             }
 
@@ -56,7 +56,7 @@ public class loginSuccessfullyTest {
 
     public boolean gmailLogin(String username){
         driver = this.getDriver();
-        //hit gmail        
+        //hit gmail
         driver.get("http://www.gmail.com");
 
         //enter userid
@@ -64,7 +64,7 @@ public class loginSuccessfullyTest {
         driver.findElement(By.id("identifierNext")).click();
 
         return waitForElementById("profileIdentifier", 10);
- 
+
     }
 
 
@@ -85,7 +85,7 @@ public class loginSuccessfullyTest {
     String returnValue = "";
     String parentWindowHandle = driver.getWindowHandle();
     String subWindowHandle = null;
-    
+
     // expect to be at inbox
     if (!waitForPageTitleContains("Inbox", 0)) { returnValue = "Not at inbox"; }
     else {
@@ -117,7 +117,7 @@ public class loginSuccessfullyTest {
               bodyElement.sendKeys(body);
               //bodyElement.sendKeys(Keys.chord(Keys.ENTER, Keys.CONTROL));
               //waitForElementByName("message", 10);
-              
+
             }
 
             //by role and tooltip
@@ -138,7 +138,7 @@ public class loginSuccessfullyTest {
 
                     }
                     catch (Exception e) {
-                        try { 
+                        try {
                             returnValue = driver.switchTo().alert().getText();
                         }
                         catch (Exception unknown) {
@@ -197,9 +197,9 @@ public class loginSuccessfullyTest {
      WebDriverWait wait = new WebDriverWait(driver, waitDuration);
 
      try {
-         wait.until(ExpectedConditions.titleContains(pageTitle)); 
-     } 
-     catch (TimeoutException e) {  
+         wait.until(ExpectedConditions.titleContains(pageTitle));
+     }
+     catch (TimeoutException e) {
          //cleanUp();
          return false;
      }
@@ -240,6 +240,4 @@ public class loginSuccessfullyTest {
       return true;
   }
 
-}		
-
-
+}
