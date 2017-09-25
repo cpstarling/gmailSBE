@@ -60,22 +60,27 @@
 
   <div concordion:example="file attachment validation">
     <h3>File attachment validation</h3>
+    <div>
+
     <p>
-      When a user composes an email which mentions that they have attached a file, they want to avoid the embarrassment of forgetting to add the attachment before clicking the send button. If the email body contains a phrase suggesting a file should be attached, but there is no file attached, then the user should be warned with the message “<span concordion:set="#message">It seems like you have forgotten to attach a file</span>”.
+      When a user composes an email which suggests that they intend to attach a file, they want to avoid the embarrassment of forgetting the add the attachment before sending. If the email body contains a phrase suggesting a file should be attached, but there is no file attached, then the user should be warned with the message “<span concordion:set="#warningMessage">It seems like you have forgotten to attach a file</span>”.
     </p>
 
-    <table concordion:execute="#result = sendEmail(#to, #subject, #body)">
+    <table>
       <tr>
-        <th concordion:set="#subject">Phrase in email body</th>
+        <th>Phrase in email body</th>
       </tr>
-      <tr><td>I have attached</td></tr>
-      <tr><td>I've attached</td></tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">I have attached</td>
+      </tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">I've attached</td></tr>
       <tr><td>I have included</td></tr>
       <tr><td>I've included</td></tr>
       <tr><td>see the attached</td></tr>
       <tr><td>see the attachment</td></tr>
       <tr><td>attached file</td></tr>
     </table>
+    </div>
+
   </div>
 
   <p concordion:execute="cleanUp()">x </p>

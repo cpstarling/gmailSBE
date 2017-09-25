@@ -177,6 +177,16 @@ public class sendEmailValidationTest {
     return returnValue;
   }
 
+  public String checkAttachment (String warningMessage, String body){
+    String result = sendEmail("validAddress@mailinator.com","Valid subject", body);
+    if(result.contains("It seems like you have forgotten to attach a file")){
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
 
   public void createNewIssue(String summary, String description, String priority){
       //home.createNewIssue(summary, description, priority);
