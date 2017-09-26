@@ -10,9 +10,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.Keys;
 import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.util.Set;
-import java.util.Iterator;
 
 
 
@@ -83,8 +80,6 @@ public class sendEmailValidationTest {
     driver = this.getDriver();
     authenticateToInbox();
     String returnValue = "";
-    String parentWindowHandle = driver.getWindowHandle();
-    String subWindowHandle = null;
 
     // expect to be at inbox
     if (!waitForPageTitleContains("Inbox", 0)) { returnValue = "Not at inbox"; }
@@ -95,14 +90,6 @@ public class sendEmailValidationTest {
         //wait for compose screen to show up
         if (!waitForElementByName("to", 1)) { returnValue = "Couldn't open email compose screen"; }
         else {
-
-            Set<String> handles = driver.getWindowHandles();
-            Iterator<String> iterator = handles.iterator();
-            while (iterator.hasNext()) {
-                subWindowHandle = iterator.next();
-            }
-            driver.switchTo().window(subWindowHandle);
-
             //enter email details
             if (to != null){
               driver.findElement(By.name("to")).sendKeys(to);
@@ -115,16 +102,7 @@ public class sendEmailValidationTest {
 
             if (body != null){
               bodyElement.sendKeys(body);
-              //bodyElement.sendKeys(Keys.chord(Keys.ENTER, Keys.CONTROL));
-              //waitForElementByName("message", 10);
-
             }
-
-            //by role and tooltip
-            //driver.findElement(By.xpath("//div[@role]='button' and [starts-with(@data-tooltip,'Send')]")).click();
-           //driver.findElement(By.xpath("//div[starts-with(@data-tooltip,'Send')]")).sendKeys(Keys.RETURN);
-           //driver.findElement(By.id(":ok")).click();
-           //WebElement submit = driver.findElement(By.xpath("//div[starts-with(@data-tooltip,'Send')]/parent::/div/div[2]"));
 
            if (waitForClickableByXpath("//div[starts-with(@data-tooltip,'Send')]/parent::div/div[2]", 1)) {
                 WebElement submit = driver.findElement(By.xpath("//div[starts-with(@data-tooltip,'Send')]/parent::div/div[2]"));
@@ -132,10 +110,9 @@ public class sendEmailValidationTest {
                 if (waitForElementByXpath("//div[contains(text(), 'message has been sent')]", 1)) {
                     returnValue = "Sent";
                 }
-                else {
+                else { //check for warningn and return message
                     try {
                         returnValue = driver.findElement(By.xpath("//div[@role='alertdialog']/div[2]")).getText();
-
                     }
                     catch (Exception e) {
                         try {
@@ -148,30 +125,9 @@ public class sendEmailValidationTest {
 
                 }
 
-
-                //check for warningn and return message
-                //else sent
            } else {
                 returnValue = "Not Sendable";
            }
-
-
-            //if (submit != null) {
-            //    returnValue = "found";
-            //}
-            //else returnValue = "notFound";
-
-
-            //try {
-                //returnValue = driver.switchTo().alert().getText();
-            //} catch (NoAlertPresentException e) {
-            //}
-            //check if the page contains the outcome message that we are looking for
-            //if(driver.findElements(By.xpath(".//div[contains(text(), '" + outcomeMessage + "')]")).size() != 0) {
-            //  returnValue = outcomeMessage;
-            //} else {
-            //returnValue = "Couldn't find the specified outcome message";
-            //}
         }
     }
     return returnValue;
