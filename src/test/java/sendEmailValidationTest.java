@@ -11,10 +11,6 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.Keys;
 import java.awt.Robot;
 
-
-
-
-
 @RunWith(ConcordionRunner.class)
 public class sendEmailValidationTest {
     public WebDriver driver;
@@ -40,12 +36,14 @@ public class sendEmailValidationTest {
         }
         else {
             driver = this.getDriver();
-            //driver.get("http://www.gmail.com");
+            /*
+            //refresh page
+            driver.get("http://www.gmail.com");
             //check for alert (navigate way) and accept
             try {
                 driver.switchTo().alert().accept();}
             catch (NoAlertPresentException e) {
-            }
+            } */
 
         }
         return waitForPageTitleContains("Inbox", 2);
@@ -107,22 +105,38 @@ public class sendEmailValidationTest {
            if (waitForClickableByXpath("//div[starts-with(@data-tooltip,'Send')]/parent::div/div[2]", 1)) {
                 WebElement submit = driver.findElement(By.xpath("//div[starts-with(@data-tooltip,'Send')]/parent::div/div[2]"));
                 submit.click();
-                if (waitForElementByXpath("//div[contains(text(), 'message has been sent')]", 1)) {
-                    returnValue = "Sent";
-                }
-                else { //check for warningn and return message
-                    try {
-                        returnValue = driver.findElement(By.xpath("//div[@role='alertdialog']/div[2]")).getText();
-                    }
-                    catch (Exception e) {
-                        try {
-                            returnValue = driver.switchTo().alert().getText();
-                        }
-                        catch (Exception unknown) {
-                            returnValue = "Unknown State";
-                        }
-                    }
 
+                //Now that the message has been sent, check for warning and return message
+
+                try {
+                    Thread.sleep(1000);
+                    returnValue =  driver.findElement(By.xpath("//div[@role='alertdialog']/div[2]")).getText();
+                    //dismiss warning
+                    driver.findElement(By.name("ok")).click();
+                    try {
+                      Thread.sleep(1000);
+                      //discard draft
+                      driver.findElement(By.cssSelector("div[aria-label='Discard draft']")).click();
+                      Thread.sleep(1000);
+                    }
+                    catch (Exception err){
+                      returnValue = "Couldn't close draft";
+                    }
+                }
+                catch (Exception e) {
+                    try {
+                      Thread.sleep(1000);
+                        returnValue = driver.switchTo().alert().getText();
+                        driver.switchTo().alert().accept();
+                        Thread.sleep(1000);
+                    }
+                    catch (Exception unknown) {
+                      if (waitForElementByXpath("//div[contains(text(), 'message has been sent')]", 1)) {
+                          returnValue = "Sent";
+                      } else {
+                        returnValue = "Unknown State";
+                      }
+                    }
                 }
 
            } else {
@@ -135,7 +149,7 @@ public class sendEmailValidationTest {
 
   public boolean checkAttachment (String warningMessage, String body){
     String result = sendEmail("validAddress@mailinator.com","Valid subject", body);
-    if(result.contains("It seems like you have forgotten to attach a file")){
+    if(result.contains("It seems like you forgot to attach a file")){
       return true;
     } else {
       return false;
