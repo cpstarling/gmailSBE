@@ -10,23 +10,16 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.Keys;
 import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.util.Set;
-import java.util.Iterator;
-
-
-
-
 
 @RunWith(ConcordionRunner.class)
-public class loginSuccessfullyTest {
+public class sendEmailValidationTest {
     public WebDriver driver;
     public boolean authenticated;
 
     public WebDriver getDriver(){
         if (driver == null){
-            System.setProperty("webdriver.chrome.driver", "/home/chris/workspace/webdriver/chromedriver");
-		    this.driver = new ChromeDriver();
+            //System.setProperty("webdriver.chrome.driver", "/home/chris/workspace/webdriver/chromedriver");
+		        this.driver = new ChromeDriver();
             return driver;
         }
         else {
@@ -43,12 +36,14 @@ public class loginSuccessfullyTest {
         }
         else {
             driver = this.getDriver();
+            /*
+            //refresh page
             driver.get("http://www.gmail.com");
             //check for alert (navigate way) and accept
             try {
-                driver.switchTo().alert().accept();} 
+                driver.switchTo().alert().accept();}
             catch (NoAlertPresentException e) {
-            }
+            } */
 
         }
         return waitForPageTitleContains("Inbox", 2);
@@ -56,7 +51,7 @@ public class loginSuccessfullyTest {
 
     public boolean gmailLogin(String username){
         driver = this.getDriver();
-        //hit gmail        
+        //hit gmail
         driver.get("http://www.gmail.com");
 
         //enter userid
@@ -64,7 +59,7 @@ public class loginSuccessfullyTest {
         driver.findElement(By.id("identifierNext")).click();
 
         return waitForElementById("profileIdentifier", 10);
- 
+
     }
 
 
@@ -83,9 +78,7 @@ public class loginSuccessfullyTest {
     driver = this.getDriver();
     authenticateToInbox();
     String returnValue = "";
-    String parentWindowHandle = driver.getWindowHandle();
-    String subWindowHandle = null;
-    
+
     // expect to be at inbox
     if (!waitForPageTitleContains("Inbox", 0)) { returnValue = "Not at inbox"; }
     else {
@@ -95,14 +88,6 @@ public class loginSuccessfullyTest {
         //wait for compose screen to show up
         if (!waitForElementByName("to", 1)) { returnValue = "Couldn't open email compose screen"; }
         else {
-
-            Set<String> handles = driver.getWindowHandles();
-            Iterator<String> iterator = handles.iterator();
-            while (iterator.hasNext()) {
-                subWindowHandle = iterator.next();
-            }
-            driver.switchTo().window(subWindowHandle);
-
             //enter email details
             if (to != null){
               driver.findElement(By.name("to")).sendKeys(to);
@@ -115,66 +100,61 @@ public class loginSuccessfullyTest {
 
             if (body != null){
               bodyElement.sendKeys(body);
-              //bodyElement.sendKeys(Keys.chord(Keys.ENTER, Keys.CONTROL));
-              //waitForElementByName("message", 10);
-              
             }
-
-            //by role and tooltip
-            //driver.findElement(By.xpath("//div[@role]='button' and [starts-with(@data-tooltip,'Send')]")).click();
-           //driver.findElement(By.xpath("//div[starts-with(@data-tooltip,'Send')]")).sendKeys(Keys.RETURN);
-           //driver.findElement(By.id(":ok")).click();
-           //WebElement submit = driver.findElement(By.xpath("//div[starts-with(@data-tooltip,'Send')]/parent::/div/div[2]"));
 
            if (waitForClickableByXpath("//div[starts-with(@data-tooltip,'Send')]/parent::div/div[2]", 1)) {
                 WebElement submit = driver.findElement(By.xpath("//div[starts-with(@data-tooltip,'Send')]/parent::div/div[2]"));
                 submit.click();
-                if (waitForElementByXpath("//div[contains(text(), 'message has been sent')]", 1)) {
-                    returnValue = "Sent";
-                }
-                else {
+
+                //Now that the message has been sent, check for warning and return message
+
+                try {
+                    Thread.sleep(1000);
+                    returnValue =  driver.findElement(By.xpath("//div[@role='alertdialog']/div[2]")).getText();
+                    //dismiss warning
+                    driver.findElement(By.name("ok")).click();
                     try {
-                        returnValue = driver.findElement(By.xpath("//div[@role='alertdialog']/div[2]")).getText();
-
+                      Thread.sleep(1000);
+                      //discard draft
+                      driver.findElement(By.cssSelector("div[aria-label='Discard draft']")).click();
+                      Thread.sleep(1000);
                     }
-                    catch (Exception e) {
-                        try { 
-                            returnValue = driver.switchTo().alert().getText();
-                        }
-                        catch (Exception unknown) {
-                            returnValue = "Unknown State";
-                        }
+                    catch (Exception err){
+                      returnValue = "Couldn't close draft";
                     }
-
+                }
+                catch (Exception e) {
+                    try {
+                      Thread.sleep(1000);
+                        returnValue = driver.switchTo().alert().getText();
+                        driver.switchTo().alert().accept();
+                        Thread.sleep(1000);
+                    }
+                    catch (Exception unknown) {
+                      if (waitForElementByXpath("//div[contains(text(), 'message has been sent')]", 1)) {
+                          returnValue = "Sent";
+                      } else {
+                        returnValue = "Unknown State";
+                      }
+                    }
                 }
 
-
-                //check for warningn and return message
-                //else sent
            } else {
                 returnValue = "Not Sendable";
            }
-
-
-            //if (submit != null) {
-            //    returnValue = "found";
-            //}
-            //else returnValue = "notFound";
-
-
-            //try {
-                //returnValue = driver.switchTo().alert().getText();
-            //} catch (NoAlertPresentException e) {
-            //}
-            //check if the page contains the outcome message that we are looking for
-            //if(driver.findElements(By.xpath(".//div[contains(text(), '" + outcomeMessage + "')]")).size() != 0) {
-            //  returnValue = outcomeMessage;
-            //} else {
-            //returnValue = "Couldn't find the specified outcome message";
-            //}
         }
     }
     return returnValue;
+  }
+
+  public boolean checkAttachment (String warningMessage, String body){
+    String result = sendEmail("validAddress@mailinator.com","Valid subject", body);
+    if(result.contains("It seems like you forgot to attach a file")){
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
 
@@ -197,9 +177,9 @@ public class loginSuccessfullyTest {
      WebDriverWait wait = new WebDriverWait(driver, waitDuration);
 
      try {
-         wait.until(ExpectedConditions.titleContains(pageTitle)); 
-     } 
-     catch (TimeoutException e) {  
+         wait.until(ExpectedConditions.titleContains(pageTitle));
+     }
+     catch (TimeoutException e) {
          //cleanUp();
          return false;
      }
@@ -240,6 +220,4 @@ public class loginSuccessfullyTest {
       return true;
   }
 
-}		
-
-
+}

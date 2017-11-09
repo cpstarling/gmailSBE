@@ -1,0 +1,90 @@
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+
+<head lang="en">
+  <meta charset="UTF-8" />
+</head>
+
+<body>
+
+  <h2>Validation of basic email elements when sending an email</h2>
+  <p> When a user is composing a message in gmail and attempts to send it, some basic validation should occur. This warns the user if:
+    <ul>
+      <li>
+        they are about to send an email with the subject and email body left blank
+      </li>
+      <li>
+        the recipient address they are sending to is badly formed
+      </li>
+      <li>
+        the email body indicates that a file should be attached, but no files are attached
+      </li>
+    </ul>
+  </p>
+
+  <div concordion:example="basic element validation">
+    <h3>Recipient address, Subject, Email body validation</h3>
+
+    <table concordion:execute="#message = sendEmail(#to, #subject, #body)">
+      <tr>
+        <th concordion:set="#to">Recipient</th>
+        <th concordion:set="#subject">Subject</th>
+        <th concordion:set="#body">Email body</th>
+        <th concordion:assertEquals="#message">Outcome message</th>
+      </tr>
+      <tr>
+        <td>validAddress@mailinator.com</td>
+        <td>Test subject</td>
+        <td>Test email body</td>
+        <td>Sent</td>
+      </tr>
+      <tr>
+        <td>invalidAddress</td>
+        <td>Test subject</td>
+        <td>Test email body</td>
+        <td>The address "invalidAddress" in the "To" field was not recognized. Please make sure that all addresses are properly formed.</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Test subject</td>
+        <td>Test email body</td>
+        <td>Please specify at least one recipient.</td>
+      </tr>
+      <tr>
+        <td>validAddress@mailinator.com</td>
+        <td></td>
+        <td></td>
+        <td>Send this message without a subject or text in the body?</td>
+      </tr>
+    </table>
+  </div>
+
+  <div concordion:example="file attachment validation">
+    <h3>File attachment validation</h3>
+    <div>
+
+    <p>
+      When a user composes an email which suggests that they intend to attach a file, they want to avoid the embarrassment of forgetting the add the attachment before sending. If the email body contains a phrase suggesting a file should be attached, but there is no file attached, then the user should be warned with the message “<span concordion:set="#warningMessage">It seems like you have forgotten to attach a file</span>”.
+    </p>
+
+    <table>
+      <tr>
+        <th>Phrase in email body</th>
+      </tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">I have attached</td>
+      </tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">I've attached</td></tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">I have included</td></tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">I've included</td></tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">see the attached</td></tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">see the attachment</td></tr>
+      <tr><td concordion:assert-true="checkAttachment(#warningMessage, #TEXT)">attached file</td></tr>
+    </table>
+    </div>
+
+  </div>
+
+  <p concordion:execute="cleanUp()">x </p>
+
+</body>
+
+</html>
