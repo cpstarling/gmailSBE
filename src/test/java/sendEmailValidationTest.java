@@ -30,7 +30,7 @@ public class sendEmailValidationTest {
     public boolean authenticateToInbox() {
         if (!authenticated) {
             if (gmailLogin("sbe.automation@gmail.com")) {
-                if (gmailPassword("boguspassword")) {
+                if (gmailPassword("boguspassword2")) {
                     authenticated = true; }
             }
         }
